@@ -7,25 +7,21 @@ import world.bentobox.bentobox.api.addons.request.AddonRequestHandler;
 import world.bentobox.chat.Chat;
 
 /**
- * Handles API requests from plugins
- * @author tastybento
- *
+ * Handles API requests from plugins.
+ * Returns whether a player has island chat enabled.
  */
-public class IsTeamChatHandler extends AddonRequestHandler {
+public class IsIslandChatHandler extends AddonRequestHandler {
 
-    private Chat addon;
+    private final Chat addon;
 
     /**
      * @param addon - chat addon
      */
-    public IsTeamChatHandler(Chat addon) {
-        super("isTeamChat");
+    public IsIslandChatHandler(Chat addon) {
+        super("isIslandChat");
         this.addon = addon;
     }
 
-    /* (non-Javadoc)
-     * @see world.bentobox.bentobox.api.addons.request.AddonRequestHandler#handle(java.util.Map)
-     */
     @Override
     public Object handle(Map<String, Object> map) {
         /*
@@ -33,8 +29,8 @@ public class IsTeamChatHandler extends AddonRequestHandler {
         1. "uuid" -> UUID of player to check
         What we will return:
         boolean
-        - true if player is in team chat
-        - false if not in team chat
+        - true if player is in island chat
+        - false if not in island chat
          */
         // Error checking
         if (map == null || map.isEmpty()
@@ -42,7 +38,7 @@ public class IsTeamChatHandler extends AddonRequestHandler {
             return false;
         }
 
-        return addon.getListener().isTeamChat((UUID) map.get("uuid"));
+        return addon.getListener().isIslandChat((UUID) map.get("uuid"));
     }
 
 }

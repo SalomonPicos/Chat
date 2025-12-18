@@ -1,20 +1,4 @@
 # Configuration file for Chat {$version}.
-team-chat:
-  # Lists the gamemodes in which you want the Team Chat to be effective.
-  gamemodes:
-  - BSkyBlock
-  - AcidIsland
-  - CaveBlock
-  - SkyGrid
-  - Brix
-  - Poseidon
-  - AOneBlock
-  - Parkour
-  # If players are outside a game world, team chat can still exist for one game mode. List it
-  # here if you want that, e.g., BSkyBlock
-  default-teamchat-gamemode: ''
-  # Log team chats to console.
-  log: false
 island-chat:
   # Lists the gamemodes in which you want the Island Chat to be effective.
   gamemodes:
@@ -26,6 +10,9 @@ island-chat:
   - Poseidon
   - AOneBlock
   - Parkour
+  # If players are outside a game world, island chat can still exist for one game mode. List it
+  # here if you want that, e.g., BSkyBlock
+  default-islandchat-gamemode: ''
   # Log island chats to console.
   log: false
 chat-listener:

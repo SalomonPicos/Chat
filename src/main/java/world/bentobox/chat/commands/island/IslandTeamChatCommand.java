@@ -5,6 +5,7 @@ import java.util.List;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.commands.CompositeCommand;
 import world.bentobox.bentobox.api.user.User;
+import world.bentobox.bentobox.database.objects.Island;
 import world.bentobox.chat.Chat;
 
 /**
@@ -13,13 +14,13 @@ import world.bentobox.chat.Chat;
 public class IslandTeamChatCommand extends CompositeCommand {
 
     public IslandTeamChatCommand(Addon addon, CompositeCommand parent, String label) {
-        super(addon, parent, label, "tc");
+        super(addon, parent, label, "ic");
     }
 
     @Override
     public void setup() {
-        this.setPermission("chat.team-chat");
-        this.setDescription("chat.team-chat.description");
+        this.setPermission("chat.island-chat");
+        this.setDescription("chat.island-chat.description");
         this.setOnlyPlayer(true);
         setConfigurableRankCommand();
     }
@@ -37,17 +38,10 @@ public class IslandTeamChatCommand extends CompositeCommand {
     public boolean execute(User user, String label, List<String> args) {
         Chat addon = this.getAddon();
 
-        // Send the message directly into team chat without the need of toggling it
-        // if there is existence of more arguments
-        if (!args.isEmpty()) {
-            addon.getListener().teamChat(getWorld(), user.getPlayer(), String.join(" ", args));
-            return true;
-        }
-
-        if (addon.getListener().togglePlayerTeamChat(user.getUniqueId())) {
-            user.sendMessage("chat.team-chat.chat-on");
+        if (addon.getListener().togglePlayerIslandChat(user.getUniqueId())) {
+            user.sendMessage("chat.island-chat.island-on");
         } else {
-            user.sendMessage("chat.team-chat.chat-off");
+            user.sendMessage("chat.island-chat.island-off");
         }
         return true;
     }

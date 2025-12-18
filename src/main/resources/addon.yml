@@ -9,12 +9,9 @@ softdepend: BSkyBlock, AcidIsland, SkyGrid, CaveBlock
 authors: tastybento, Poslovitch
 
 permissions:
-  '[gamemode].chat.team-chat':
-    description: Player can use team chat
-    default: true
   '[gamemode].chat.island-chat':
     description: Player can use island chat
     default: true
   '[gamemode].chat.spy':
-    description: Player can use team or island chat spy
+    description: Player can use island chat spy
     default: op

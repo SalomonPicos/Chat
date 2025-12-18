@@ -18,22 +18,14 @@ import world.bentobox.bentobox.api.configuration.StoreAt;
 @ConfigComment("Configuration file for Chat [version].")
 public class Settings implements ConfigObject {
 
-    @ConfigComment("Lists the gamemodes in which you want the Team Chat to be effective.")
-    @ConfigEntry(path = "team-chat.gamemodes")
-    private List<String> teamChatGamemodes = Arrays.asList("BSkyBlock", "AcidIsland", "CaveBlock", "SkyGrid");
-
-    @ConfigComment("If players are outside a game world, team chat can still exist for one game mode. List it")
-    @ConfigComment("here if you want that, e.g., BSkyBlock")
-    @ConfigEntry(path = "team-chat.default-teamchat-gamemode")
-    private String defaultChatGamemode = "";
-
-    @ConfigComment("Log team chats to console.")
-    @ConfigEntry(path = "team-chat.log")
-    private boolean logTeamChats;
-
     @ConfigComment("Lists the gamemodes in which you want the Island Chat to be effective.")
     @ConfigEntry(path = "island-chat.gamemodes")
     private List<String> islandChatGamemodes = Arrays.asList("BSkyBlock", "AcidIsland", "CaveBlock", "SkyGrid");
+
+    @ConfigComment("If players are outside a game world, island chat can still exist for one game mode. List it")
+    @ConfigComment("here if you want that, e.g., BSkyBlock")
+    @ConfigEntry(path = "island-chat.default-islandchat-gamemode")
+    private String defaultChatGamemode = "";
 
     @ConfigComment("Log island chats to console.")
     @ConfigEntry(path = "island-chat.log")
@@ -45,34 +37,12 @@ public class Settings implements ConfigObject {
     @ConfigEntry(path = "chat-listener.priority")
     private String eventPriority = "normal";
 
-    public List<String> getTeamChatGamemodes() {
-        return teamChatGamemodes;
-    }
-
-    public void setTeamChatGamemodes(List<String> teamChatGamemodes) {
-        this.teamChatGamemodes = teamChatGamemodes;
-    }
-
     public List<String> getIslandChatGamemodes() {
         return islandChatGamemodes;
     }
 
     public void setIslandChatGamemodes(List<String> islandChatGamemodes) {
         this.islandChatGamemodes = islandChatGamemodes;
-    }
-
-    /**
-     * @return the logTeamChats
-     */
-    public boolean isLogTeamChats() {
-        return logTeamChats;
-    }
-
-    /**
-     * @param logTeamChats the logTeamChats to set
-     */
-    public void setLogTeamChats(boolean logTeamChats) {
-        this.logTeamChats = logTeamChats;
     }
 
     /**

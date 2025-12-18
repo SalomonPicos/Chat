@@ -7,19 +7,17 @@ import java.util.Set;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 
-import org.bukkit.event.player.AsyncPlayerChatEvent;
+import io.papermc.paper.event.player.AsyncChatEvent;
 import world.bentobox.bentobox.api.addons.Addon;
 import world.bentobox.bentobox.api.addons.GameModeAddon;
 import world.bentobox.bentobox.api.configuration.Config;
-import world.bentobox.chat.commands.admin.AdminIslandChatSpyCommand;
 import world.bentobox.chat.commands.admin.AdminTeamChatSpyCommand;
-import world.bentobox.chat.commands.island.IslandChatCommand;
 import world.bentobox.chat.commands.island.IslandTeamChatCommand;
 import world.bentobox.chat.listeners.ChatListener;
-import world.bentobox.chat.requesthandlers.IsTeamChatHandler;
+import world.bentobox.chat.requesthandlers.IsIslandChatHandler;
 
 /**
- * Provides Team/Island-Chat related features, commands and options.
+ * Provides Island-Chat related features, commands and options.
  * @author Poslovitch, tastybento
  */
 public class Chat extends Addon {
@@ -53,28 +51,21 @@ public class Chat extends Addon {
                 .findFirst().map(GameModeAddon::getOverWorld);
         // Register listener
         listener = new ChatListener(this);
-        // This manually registers the AsyncPlayerChatEvent with the priority from configuration
-        Bukkit.getPluginManager().registerEvent(AsyncPlayerChatEvent.class, listener, getSettings().getEventPriority(), listener, getPlugin());
+        // This manually registers the AsyncChatEvent with the priority from configuration
+        Bukkit.getPluginManager().registerEvent(AsyncChatEvent.class, listener, getSettings().getEventPriority(), listener, getPlugin());
         // This will register the remaining events with @EventHandler annotation inside the listener
         this.registerListener(listener);
 
         // Register request handlers
-        registerRequestHandler(new IsTeamChatHandler(this));
+        registerRequestHandler(new IsIslandChatHandler(this));
     }
 
     private void setupCommands() {
         getPlugin().getAddonsManager().getGameModeAddons().forEach(gameModeAddon -> {
-            if (settings.getTeamChatGamemodes().contains(gameModeAddon.getDescription().getName())) {
-                log("Hooking team chat into " + gameModeAddon.getDescription().getName());
-                gameModeAddon.getPlayerCommand().ifPresent(c -> new IslandTeamChatCommand(this, c, "teamchat"));
-                gameModeAddon.getAdminCommand().ifPresent(c -> new AdminTeamChatSpyCommand(this, c, "teamchatspy"));
-                registeredGameModes.add(gameModeAddon);
-            }
-
             if (settings.getIslandChatGamemodes().contains(gameModeAddon.getDescription().getName())) {
                 log("Hooking island chat into " + gameModeAddon.getDescription().getName());
-                gameModeAddon.getPlayerCommand().ifPresent(playerCommand -> new IslandChatCommand(this, playerCommand, "chat"));
-                gameModeAddon.getAdminCommand().ifPresent(playerCommand -> new AdminIslandChatSpyCommand(this, playerCommand, "chatspy"));
+                gameModeAddon.getPlayerCommand().ifPresent(c -> new IslandTeamChatCommand(this, c, "chat"));
+                gameModeAddon.getAdminCommand().ifPresent(c -> new AdminTeamChatSpyCommand(this, c, "chatspy"));
                 registeredGameModes.add(gameModeAddon);
             }
         });

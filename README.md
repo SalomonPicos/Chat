@@ -1,24 +1,18 @@
 # Chat
-This addon gives players Team Chat and Island Chat for any BentoBox gamemode.
+This addon gives players Island Chat for any BentoBox gamemode (internamente continua a usare il team dell'isola).
 
 ## Island chat
 
-When enabled, chat is limited to just players on the island, including visitors. Admins or mods can listen into island chats using a spy command.
-
-## Team chat
-
-When enabled, chats will go only to team members. Team players can toggle whether their chat will go onto the team chat channel or not. Admins can listen into all team chats using a spy command.
+Quando attiva, la chat va solo ai membri del team dell'isola. I giocatori possono attivare/disattivare il canale island chat, gli admin possono spiare tutte le island chat.
 
 ## Commands
 ### Player commands
 
-* `chat` - toggles island chat on and off
-* `teamchat` - toggles whether player's chat goes to the team channel or not
+* `chat` - toggles whether player's chat goes to the island channel or not
 
 ### Admin commands
 
-* `chatspy` - toggles island chat on and off
-* `teamchatspy` - toggles whether player's chat goes to the team channel or not
+* `chatspy` - toggles whether player's chat goes to the island channel or not
 
 The config also has settings to log all chats if required.
 
@@ -26,16 +20,7 @@ The config also has settings to log all chats if required.
 
 ```
 # Configuration file for Chat
-team-chat:
-  gamemodes:
-  - BSkyBlock
-  - AcidIsland
-  - CaveBlock
-  - SkyGrid
-  # Log team chats to console.
-  log: false
 island-chat:
-  # Lists the gamemodes in which you want the Chat addon to be effective.
   gamemodes:
   - BSkyBlock
   - AcidIsland
@@ -49,48 +34,35 @@ island-chat:
 
 ```
 permissions:
-  bskyblock.chat.team-chat:
-    description: Player can use team chat
-    default: true
   bskyblock.chat.island-chat:
-    description: Player can create a welcome warp sign
+    description: Player can use island chat
     default: true
   bskyblock.chat.spy:
-    description: Player can use team or island chat spy
+    description: Player can use island chat spy
     default: op
  
-  acidisland.chat.team-chat:
-    description: Player can use team chat
-    default: true
   acidisland.chat.island-chat:
-    description: Player can create a welcome warp sign
+    description: Player can use island chat
     default: true
   acidisland.chat.spy:
-    description: Player can use team or island chat spy
+    description: Player can use island chat spy
     default: op
 
-  caveblock.chat.team-chat:
-    description: Player can use team chat
-    default: true
   caveblock.chat.island-chat:
-    description: Player can create a welcome warp sign
+    description: Player can use island chat
     default: true
   caveblock.chat.spy:
-    description: Player can use team or island chat spy
+    description: Player can use island chat spy
     default: op
 
-  skygrid.chat.team-chat:
-    description: Player can use team chat
-    default: true
   skygrid.chat.island-chat:
-    description: Player can create a welcome warp sign
+    description: Player can use island chat
     default: true
   skygrid.chat.spy:
-    description: Player can use team or island chat spy
+    description: Player can use island chat spy
     default: op
  
 ```
 
 ## Like this addon?
 You can [sponsor](https://github.com/sponsors/tastybento) to get more addons like this and make this one better!
-
