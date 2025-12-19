@@ -27,11 +27,12 @@ public class IslandTeamChatCommand extends CompositeCommand {
 
     @Override
     public boolean canExecute(User user, String label, List<String> args) {
-        boolean hasTeam = this.getIslands().inTeam(getWorld(), user.getUniqueId());
-        if (!hasTeam) {
-            user.sendMessage("general.errors.no-team");
+        Island island = this.getIslands().getIsland(getWorld(), user.getUniqueId());
+        if (island == null) {
+            user.sendMessage("chat.island-chat.no-island");
+            return false;
         }
-        return hasTeam;
+        return true;
     }
 
     @Override

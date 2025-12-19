@@ -11,6 +11,7 @@ chat:
       syntax: "&c[team-chat-spy] &a[name]&8: [message]"
   island-chat:
     description: "toggles island chat on/off"
+    no-island: "&cYou don't have an island."
     island-on: "&a Island chat on."
     island-off: "&c Island chat off."
     syntax: "&6[island] &a[name]&8: &f[message]"

@@ -75,6 +75,7 @@ public class ChatListener implements Listener, EventExecutor {
             return;
         }
 
+        String plainMessage = PlainTextComponentSerializer.plainText().serialize(e.originalMessage());
         boolean toggled = islandChatUsers.contains(p.getUniqueId());
         if (!toggled) {
             // Not an island chat message, let default pipeline continue
@@ -87,35 +88,25 @@ public class ChatListener implements Listener, EventExecutor {
                 .map(Player::getUniqueId)
                 .collect(Collectors.toSet());
 
-        // Apply viewers
-        Set<org.bukkit.entity.Player> recipients = targetUUIDs.stream()
-                .map(Bukkit::getPlayer)
-                .filter(player -> player != null && player.isOnline())
-                .collect(Collectors.toSet());
+        // Stop default chat handling; we handle messaging manually to allow locale formatting
+        e.setCancelled(true);
 
-        e.viewers().clear();
-        e.viewers().addAll(recipients);
-
-        // Renderer to match island chat format (simplified, uses colors similar to old format)
-        e.renderer((source, sourceDisplayName, message, viewer) -> Component.text()
-                .append(Component.text("[island] ").color(NamedTextColor.GOLD))
-                .append(Component.text(source.getName()).color(NamedTextColor.GREEN))
-                .append(Component.text(": ").color(NamedTextColor.DARK_GRAY))
-                .append(message.colorIfAbsent(NamedTextColor.WHITE))
-                .build());
+        // Send localized message to island members
+        targetUUIDs.stream()
+                .map(User::getInstance)
+                .filter(User::isOnline)
+                .forEach(target -> target.sendMessage("chat.island-chat.syntax", TextVariables.NAME, p.getName(), MESSAGE, plainMessage));
 
         // Log if required
         if (addon.getSettings().isLogIslandChats()) {
-            String msg = PlainTextComponentSerializer.plainText().serialize(e.originalMessage());
-            addon.log("[Island Chat Log] " + p.getName() + ": " + msg);
+            addon.log("[Island Chat Log] " + p.getName() + ": " + plainMessage);
         }
         // Spy if required
         Bukkit.getOnlinePlayers().stream()
-        .filter(player -> spies.contains(player.getUniqueId()) && !recipients.contains(player))
+        .filter(player -> spies.contains(player.getUniqueId()) && !targetUUIDs.contains(player.getUniqueId()))
         .map(User::getInstance)
         .forEach(u -> {
-            String msg = PlainTextComponentSerializer.plainText().serialize(e.originalMessage());
-            u.sendMessage("chat.island-chat.spy.syntax", TextVariables.NAME, p.getName(), MESSAGE, msg);
+            u.sendMessage("chat.island-chat.spy.syntax", TextVariables.NAME, p.getName(), MESSAGE, plainMessage);
         });
     }
 
